@@ -6,6 +6,7 @@ const CustomerWiseItem = () => {
     const [formData, setFormData] = useState({
         customerId: '',
         vendorId:'',
+        customerName: '',
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -76,6 +77,7 @@ const CustomerWiseItem = () => {
             console.error('Error:', error.message);
         }
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -108,6 +110,10 @@ const CustomerWiseItem = () => {
             [name]: value
         }));
     };
+    
+    const handleViewPage = (itemId) => {
+      navigate(`/updatevendor/${itemId}`);
+  };
 
     const handleCustomerChange = (selectedOption) => {
         setFormData(prevData => ({
@@ -230,6 +236,12 @@ const CustomerWiseItem = () => {
                       scope="col"
                       className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
                     >
+                      Price
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
+                    >
                       Vendor Name
                     </th>
                     <th
@@ -261,31 +273,34 @@ const CustomerWiseItem = () => {
                      <div className="text-sm font-medium text-gray-900">{item.label} / {item.weight} gram</div>
                    </td>
                    <td className="whitespace-nowrap px-4 py-4">
-                                                            <div className="text-sm font-medium text-gray-900">
-                                                                {item.vendorId == '' || item.vendorId == null ? (
-                                                                    <Select
-                                                                        options={vendorOptions}
-                                                                        id={`vendor-${item._id}`}
-                                                                        name={`vendor-${item._id}`}
-                                                                        className="block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                                        value={vendorOptions.find(option => option.value === formData.vendorId)}
-                                                                        onChange={(selectedOption) => handleVendorChange(selectedOption, item._id)}
-                                                                    />
-                                                                ) : (
-                                                                    <p>Vendor Name</p>
-                                                                )}
-                                                            </div>
-                                                        </td>
+                     <div className="text-sm font-medium text-gray-900">{item.price}</div>
+                   </td>
+                   <td className="whitespace-nowrap px-4 py-4">
+                    {item.vendordata ? (
+                      <div className="text-sm font-medium text-gray-900">
+                        {item.vendordata.name}
+                      </div>
+                    ) : (
+                      <div className="text-sm font-medium text-gray-900 text-center">-</div>
+                    )}
+                    </td>
                    <td className="whitespace-nowrap  px-4 py-4 text-sm text-gray-500">
                      <div className="text-sm font-medium text-gray-900">
                         <img src={item.photo} width={150} /></div>
                    </td>
                    <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium">
+                   <button
+                      type="button"
+                      className="text-indigo-600 hover:text-indigo-900"
+                      onClick={() => handleViewPage(item._id)}
+                    >
+                      View
+                    </button>
 
-                     <Link to="/studentAllData" className="text-gray-500 hover:text-indigo-600">
-                       <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                     <Link to=""  className="text-gray-500 hover:text-indigo-600">
+                       {/* <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
                          View
-                       </span>
+                       </span> */}
                        <span className="inline-flex rounded-full bg-red-100 px-2 mx-2 text-xs font-semibold leading-5 text-green-800">
                          Delete
                        </span>

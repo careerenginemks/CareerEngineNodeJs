@@ -5,10 +5,10 @@ import AddCustomer from "./AddCustomer"
 import AddVendor from "./AddVendor"
 import ListGirvi from "./ListGirvi"
 import CustomerWiseItem from "./CustomerWiseItem"
+import Updatevendor from "./Updatevendor"
 import StudentAcademic from "./StudentAcademic"
 import StudentReportCard from "./StudentReportCard"
 import StudentFamilyDetail from "./StudentFamilyDetail"
-import StudentAllData from "./StudentAllData"
 
 export {
     Home,
@@ -17,5 +17,6 @@ export {
     AddItem,
     AddVendor,
     ListGirvi,
-    CustomerWiseItem
+    CustomerWiseItem,
+    Updatevendor
 }

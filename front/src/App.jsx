@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {logo} from './assets' 
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import {Dashboard, Home, AddCustomer, AddItem, AddVendor, ListGirvi,CustomerWiseItem} from './pages'
+import {Dashboard, Home, AddCustomer, AddItem, AddVendor, ListGirvi,CustomerWiseItem,Updatevendor} from './pages'
 import {EditStudentBasic} from './pages/EditData/index'
 
 function App() {
@@ -29,7 +29,8 @@ function App() {
     <header className="w-full flex justify-between items-center bg-white sm:px-8 px-4 py-4 border-b border-b-[#e6ebf4]">
       <div className=''>
       <Link to="/">
-        <img src={logo} alt="logo" className="w-2/5 object-contain" />
+       {/* <img src={logo} alt="logo" className="w-2/5 object-contain" /> */}
+       <h2>Gurunanak Jewellers</h2>
       </Link>
       </div>
     {checkLogin == true
@@ -62,6 +63,7 @@ function App() {
         <Route path="/addVendor" element={<AddVendor />} />
         <Route path="/listGirvi" element={<ListGirvi />} />
         <Route path="/customerWiseItem" element={<CustomerWiseItem />} />
+        <Route path="/updatevendor/:id" element={<Updatevendor />} />
         
 
        

@@ -249,14 +249,80 @@ router.delete('/vendors/:vendorId', async (req, res) => {
 // Route to create a new item
 router.post('/items', async (req, res) => {
   try {
-      const { itemName,description, weight, label, photo, customerId } = req.body;
-      const newItem = new Item({ itemName,description, weight, label, photo, customerId });
+      const { itemName,description, weight, label, price, photo, customerId } = req.body;
+      const newItem = new Item({ itemName,description, weight, label, price, photo, customerId });
+      console.log( itemName,description, weight, label, price, photo, customerId);
       const savedItem = await newItem.save();
+      console.log(savedItem, "savedItem");
       res.status(201).json(savedItem);
   } catch (error) {
       res.status(400).json({ message: error.message });
   }
 });
+
+// router.get('/getitemdata/:id', async (req, res) => {
+//     try {
+//         const item = await Item.findById(req.params.id);
+//         if (!item) {
+//             return res.status(404).json({ message: 'Item not found' });
+//         }
+//         res.json(item);
+//     } catch (err) {
+//         res.status(500).json({ message: 'Server error', error: err.message });
+//     }
+// });
+
+router.get('/getitemdata/:id', async (req, res) => {
+    try {
+      const item = await Item.findById(req.params.id); // Assuming customer ID is referenced in the Item model
+      if (!item) {
+        return res.status(404).json({ message: 'Item not found' });
+      }
+  
+      if (item.customerId !== null) {
+        const customer = await Customer.findById(item.customerId);
+        if (!customer) {
+          return res.status(404).json({ message: 'Customer not found' });
+        }
+  
+        // Merge customer data with item data
+        const itemWithCustomer = {
+          ...item.toObject(),
+          customer: customer.toObject(),
+        };
+  
+        return res.json(itemWithCustomer);
+      }
+  
+      // Return item data without customer details if customerId is null
+      res.json(item);
+    } catch (err) {
+      res.status(500).json({ message: 'Server error', error: err.message });
+    }
+  });
+  
+  router.post('/updatevendorid/:id', async (req, res) => {
+    const { id } = req.params;
+    const { vendorId } = req.body; // Assuming vendorId is passed in the request body
+  
+    try {
+      // Validate vendorId if needed
+  
+      const updatedItem = await Item.findByIdAndUpdate(
+        id,
+        { vendorId },
+        { new: true } // To return the updated document
+      );
+  
+      if (!updatedItem) {
+        return res.status(404).json({ message: 'Item not found' });
+      }
+  
+      res.json(updatedItem);
+    } catch (err) {
+      res.status(500).json({ message: 'Server error', error: err.message });
+    }
+  });
 
 // Route to get all items
 router.get('/items', async (req, res) => {
@@ -321,7 +387,21 @@ router.get('/customerWiseItem/:customerId', async (req, res) => {
         if (!items) {
           return res.status(404).json({ message: 'No items found for the specified customer' });
         }
-        res.status(200).json(items);
+        const upitems = [];
+        for (const item of items) {
+            
+            const itemWithvendor = {
+                ...item.toObject()
+              };
+            if (item.vendorId !== null) {
+              const vendor = await Vendor.findById(item.vendorId);
+              if (vendor) {
+                    itemWithvendor.vendordata = vendor.toObject();
+              }
+            }
+                  upitems.push(itemWithvendor);
+          }
+        res.status(200).json(upitems);
       } catch (error) {
         console.error('Error fetching items:', error);
         res.status(500).json({ message: 'Internal server error' });

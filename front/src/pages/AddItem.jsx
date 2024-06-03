@@ -8,6 +8,7 @@ const AddItem = () => {
     description: '',
     weight: '',
     label: '',
+    price:'',
     customerId:'',
     photo: 'https://static.vecteezy.com/system/resources/thumbnails/027/717/343/small_2x/golden-diamond-gemstone-ring-generative-ai-photo.jpg',
   });
@@ -54,6 +55,7 @@ const AddItem = () => {
         },
         body: JSON.stringify(formData),
       });
+      console.log(response,"response");
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -150,7 +152,7 @@ const AddItem = () => {
                       </div>
                     </div>
                   
-                  <div className="sm:col-span-2">
+                    <div className="sm:col-span-2">
                       <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
                       Weight
                       </label>
@@ -167,6 +169,7 @@ const AddItem = () => {
                         />
                       </div>
                     </div>
+
                   <div className="sm:col-span-2">
                       <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
                       label
@@ -193,6 +196,24 @@ const AddItem = () => {
                           type="file"
                           name="photo"
                           id="photo"
+                          onChange={handleInputChange}
+                          className={`block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.middlename ? 'border-red-500' : ''
+                            }`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
+                      Price
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="text"
+                          name="price"
+                          placeholder='price'
+                          id="price"
+                          value={formData['price']}
                           onChange={handleInputChange}
                           className={`block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.middlename ? 'border-red-500' : ''
                             }`}
