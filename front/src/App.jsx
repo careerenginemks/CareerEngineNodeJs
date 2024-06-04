@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {logo} from './assets' 
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import {Dashboard, Home, AddCustomer, AddItem, AddVendor, ListGirvi,CustomerWiseItem,Updatevendor} from './pages'
+import {Dashboard, Home, AddCustomer,AddGirviItem, AddItem, AddVendor, ListGirvi,CustomerWiseItem,VendorWiseItems,Updatevendor} from './pages'
 import {EditStudentBasic} from './pages/EditData/index'
 
 function App() {
@@ -59,10 +59,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/addCustomer" element={<AddCustomer />} />
+        <Route path="/addGirviItem" element={<AddGirviItem />} />
         <Route path="/addItem" element={<AddItem />} />
         <Route path="/addVendor" element={<AddVendor />} />
         <Route path="/listGirvi" element={<ListGirvi />} />
         <Route path="/customerWiseItem" element={<CustomerWiseItem />} />
+        <Route path="/vendorWiseItems" element={<VendorWiseItems />} />
         <Route path="/updatevendor/:id" element={<Updatevendor />} />
         
 

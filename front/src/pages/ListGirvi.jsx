@@ -137,7 +137,7 @@ const fetchGirviData = async () => {
                    </td>
                    <td className="whitespace-nowrap  px-4 py-4 text-sm text-gray-500">
                      <div className="text-sm font-medium text-gray-900">
-                        <img src={item.photo} width={150} /></div>
+                        <img src={item.imageUrl} width={150} /></div>
                    </td>
                    <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium">
 

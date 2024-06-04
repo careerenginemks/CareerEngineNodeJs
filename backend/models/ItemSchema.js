@@ -27,9 +27,9 @@ const ItemSchema = new Schema({
         enum: ['pledged', 'returned'],
         default: 'pledged'
     },
-    photo: {
-        type: String,
-        required: true,
+    imageUrl: {
+      type: String,
+      required: true,
     },
     customerId: {
         type: Schema.Types.ObjectId,

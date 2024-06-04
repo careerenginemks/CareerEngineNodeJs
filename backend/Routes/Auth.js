@@ -3,6 +3,7 @@ const Customer = require('../models/CustomerSchema')
 const Vendor = require('../models/VendorSchema')
 const User = require('../models/UserSchema')
 const Item = require('../models/ItemSchema')
+const Allitems = require('../models/Allitemschema')
 const Transaction = require('../models/TransactionSchema')
 // const Receipt = require('../models/Receipt')
 const router = express.Router()
@@ -108,7 +109,24 @@ router.post('/login', [
     }
 })
 
+// Route to get total counts of customers, vendors, items, and girvi items
+router.get('/totalcount', async (req, res) => {
+  try {
+    const customersCount = await Customer.countDocuments();
+    const vendorsCount = await Vendor.countDocuments();
+    const itemsCount = await Allitems.countDocuments();
+    const girviItemsCount = await Item.countDocuments();
 
+    res.json({
+      customers: customersCount,
+      vendors: vendorsCount,
+      items: itemsCount,
+      girviItems: girviItemsCount
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 // var foodItems= require('../index').foodData;
@@ -249,9 +267,9 @@ router.delete('/vendors/:vendorId', async (req, res) => {
 // Route to create a new item
 router.post('/items', async (req, res) => {
   try {
-      const { itemName,description, weight, label, price, photo, customerId } = req.body;
-      const newItem = new Item({ itemName,description, weight, label, price, photo, customerId });
-      console.log( itemName,description, weight, label, price, photo, customerId);
+      const { itemName,description, weight, label, price, imageUrl, customerId } = req.body;
+      const newItem = new Item({ itemName,description, weight, label, price, imageUrl, customerId });
+      console.log( itemName,description, weight, label, price, imageUrl, customerId);
       const savedItem = await newItem.save();
       console.log(savedItem, "savedItem");
       res.status(201).json(savedItem);
@@ -408,6 +426,35 @@ router.get('/customerWiseItem/:customerId', async (req, res) => {
       }
   });
 
+router.get('/vendorWiseItem/:vendorId', async (req, res) => {
+    try {
+        const vendorId = req.params.vendorId;
+        // Find all items with the specified vendorId
+        const items = await Item.find({ vendorId });
+        if (!items) {
+          return res.status(404).json({ message: 'No items found for the specified vendor' });
+        }
+        const upitems1 = [];
+        for (const item of items) {
+            
+            const itemWithcustomer = {
+                ...item.toObject()
+              };
+            if (item.customerId !== null) {
+              const customer1 = await Customer.findById(item.customerId);
+              if (customer1) {
+                itemWithcustomer.customerdata = customer1.toObject();
+              }
+            }
+            upitems1.push(itemWithcustomer);
+          }
+        res.status(200).json(upitems1);
+      } catch (error) {
+        console.error('Error fetching items:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+  });
+
 // Route to create a new transaction
 router.post('/transactions', async (req, res) => {
     try {
@@ -483,5 +530,28 @@ router.delete('/transactions/:transactionId', async (req, res) => {
       res.status(500).json({ message: error.message });
   }
 });
+
+// Route to create a new customer
+router.post('/allitems', async (req, res) => {
+  try {
+      const { itemName, label } = req.body;
+      const newitems = new Allitems({ itemName, label });
+      const saveditems = await newitems.save();
+      res.status(201).json(saveditems);
+  } catch (error) {
+      res.status(400).json({ message: error.message });
+  }
+});
+
+// Assuming you have this in your routes file
+router.get('/getallitems', async (req, res) => {
+  try {
+    const items = await Allitems.find({});
+    res.status(200).json(items);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 module.exports = router

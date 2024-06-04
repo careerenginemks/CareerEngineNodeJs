@@ -1,85 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Select from 'react-select';
 
 const AddItem = () => {
   const [formData, setFormData] = useState({
     itemName:'',
-    description: '',
-    weight: '',
     label: '',
-    price:'',
-    customerId:'',
-    photo: 'https://static.vecteezy.com/system/resources/thumbnails/027/717/343/small_2x/golden-diamond-gemstone-ring-generative-ai-photo.jpg',
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [customerOptions, setCustomerOptions] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!localStorage.getItem("UserauthToken")) {
       navigate("/");
     }
-    fetchAllCustomer();
   }, []);
-
-  const fetchAllCustomer = () => {
-    setLoading(true);
-    fetch('http://localhost:5000/api/auth/customers')
-      .then(response => response.json())
-      .then(data => {
-        const options = data.map(customer => ({
-          value: customer._id,
-          label: customer.name
-        }));
-        setCustomerOptions(options);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching customer details:', error);
-        setLoading(false);
-      });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    console.log("Before Data",formData);
+  
     try {
-      const response = await fetch("http://localhost:5000/api/auth/items", {
+      const response = await fetch("http://localhost:5000/api/auth/allitems", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      console.log(response,"response");
-
+  
       if (!response.ok) {
         throw new Error(response.statusText);
       }
-      console.log("After Data",formData);
-      navigate('/studentsList');
+      navigate('/dashboard');
     } catch (error) {
       console.error("Error:", error.message);
       setLoading(false);
     }
   };
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
       ...prevData,
       [name]: value
-    }));
-  };
-
-  const handleCustomerChange = (selectedOption) => {
-    setFormData(prevData => ({
-      ...prevData,
-      customerId: selectedOption.value
     }));
   };
 
@@ -103,20 +68,6 @@ const AddItem = () => {
               <div className="border-b border-gray-900/10 pb-12">
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-2">
-                    <label htmlFor="customerName" className="block text-sm font-medium leading-6 text-gray-900">Customer Name</label>
-                    <div className="mt-2">
-                      <Select
-                        options={customerOptions}
-                        id="customerId"
-                        name="customerId"
-                        className="block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        value={customerOptions.find(option => option.value === formData.customerId)}
-                        onChange={handleCustomerChange}
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="sm:col-span-2">
                       <label htmlFor="itemName" className="block text-sm font-medium leading-6 text-gray-900">
                       Item Name
                       </label>
@@ -136,42 +87,6 @@ const AddItem = () => {
 
                   <div className="sm:col-span-2">
                       <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
-                       Description
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          name="description"
-                          placeholder='description'
-                          id="description"
-                          value={formData['description']}
-                          onChange={handleInputChange}
-                          className={`block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.middlename ? 'border-red-500' : ''
-                            }`}
-                        />
-                      </div>
-                    </div>
-                  
-                    <div className="sm:col-span-2">
-                      <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
-                      Weight
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          name="weight"
-                          placeholder='weight'
-                          id="weight"
-                          value={formData['weight']}
-                          onChange={handleInputChange}
-                          className={`block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.middlename ? 'border-red-500' : ''
-                            }`}
-                        />
-                      </div>
-                    </div>
-
-                  <div className="sm:col-span-2">
-                      <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
                       label
                       </label>
                       <div className="mt-2">
@@ -181,39 +96,6 @@ const AddItem = () => {
                           placeholder='label'
                           id="label"
                           value={formData['label']}
-                          onChange={handleInputChange}
-                          className={`block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.middlename ? 'border-red-500' : ''
-                            }`}
-                        />
-                      </div>
-                    </div>
-                  <div className="sm:col-span-2">
-                      <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
-                      Photo
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          type="file"
-                          name="photo"
-                          id="photo"
-                          onChange={handleInputChange}
-                          className={`block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.middlename ? 'border-red-500' : ''
-                            }`}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
-                      Price
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          name="price"
-                          placeholder='price'
-                          id="price"
-                          value={formData['price']}
                           onChange={handleInputChange}
                           className={`block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.middlename ? 'border-red-500' : ''
                             }`}
