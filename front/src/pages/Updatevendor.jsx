@@ -20,7 +20,7 @@ const Updatevendor = () => {
 
   const fetchAllVendor = () => {
     setLoading(true);
-    fetch('http://localhost:5000/api/auth/vendors')
+    fetch('https://gnj.onrender.com/api/auth/vendors')
         .then(response => response.json())
         .then(data => {
             const options = data.map(customer => ({
@@ -39,7 +39,7 @@ const Updatevendor = () => {
 };
   const fetchItemData = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/getitemdata/${itemId}`);
+      const response = await fetch(`https://gnj.onrender.com/api/auth/getitemdata/${itemId}`);
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Error fetching item:', errorData.message);
@@ -59,7 +59,7 @@ const Updatevendor = () => {
   const updateVendorId = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/auth/updatevendorid/${itemData._id}`, {
+      const response = await fetch(`https://gnj.onrender.com/api/auth/updatevendorid/${itemData._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

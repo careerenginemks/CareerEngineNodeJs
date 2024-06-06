@@ -50,7 +50,7 @@ const StudentInstitution = () => {
         fetchAllStudentDetails()
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/v1/instlist');
+                const response = await fetch('https://gnj.onrender.com/api/v1/instlist');
                 const data = await response.json();
                 setAcademicData(data.data);
 
@@ -74,7 +74,7 @@ const StudentInstitution = () => {
    
     const fetchAllStudentDetails = () => {
         setloading(true);
-        fetch('http://localhost:5000/api/v1/fetchAllStudentDetails')
+        fetch('https://gnj.onrender.com/api/v1/fetchAllStudentDetails')
             .then(response => response.json())
             .then(data => {
                 console.log(data, "data data");
@@ -135,7 +135,7 @@ const StudentInstitution = () => {
         setloading(true);
         // console.log('Form Data:', formData);
          // Proceed with the second API call
-         const response = await fetch("http://localhost:5000/api/v1/addInsititutionDetail", {
+         const response = await fetch("https://gnj.onrender.com/api/v1/addInsititutionDetail", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

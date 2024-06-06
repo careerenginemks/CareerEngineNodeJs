@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     const fetchTotalCounts = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/totalcount');
+            const response = await fetch('https://gnj.onrender.com/api/auth/totalcount');
             if (response.ok) {
                 const data = await response.json();
                 setCounts(data);

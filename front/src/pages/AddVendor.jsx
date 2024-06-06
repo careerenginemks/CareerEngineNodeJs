@@ -28,7 +28,7 @@ const AddVendor = () => {
 
     console.log("Before Data",formData);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/vendors", {
+      const response = await fetch("https://gnj.onrender.com/api/auth/vendors", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

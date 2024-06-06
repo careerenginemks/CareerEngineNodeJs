@@ -29,7 +29,7 @@ const alertMessage = messageState.show && (
     setloading(true)
     // Add your login logic here
     console.log("credentails",credentails)
-    const response = await fetch("http://localhost:5000/api/auth/login", {
+    const response = await fetch("https://gnj.onrender.com/api/auth/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -19,7 +19,7 @@ setUserId(getUserid)
  // Check if userId exists
  if (getUserid) {
   // Make API request
-  fetch('http://localhost:5000/api/v1/fetchStudentDetails', {
+  fetch('https://gnj.onrender.com/api/v1/fetchStudentDetails', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const fetchData = async () => {
   console.log({userID},"userID")
   try {
     // Assuming your API endpoint is "/api/v1/fetchStudentDetails"
-    const response = await fetch(`http://localhost:5000/api/v1/fetchStudentDetails`, {
+    const response = await fetch(`https://gnj.onrender.com/api/v1/fetchStudentDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

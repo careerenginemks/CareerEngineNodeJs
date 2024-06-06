@@ -26,7 +26,7 @@ setUserId(getUserid)
 const fetchItems = async (customerId) => {
     console.log("Fecsdsd");
     try {
-      const response = await fetch(`http://localhost:5000/api/items/${customerId}`);
+      const response = await fetch(`https://gnj.onrender.com/api/items/${customerId}`);
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Error fetching items:', errorData.message);
@@ -42,7 +42,7 @@ const fetchItems = async (customerId) => {
 const fetchGirviData = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/auth/items');
+      const response = await fetch('https://gnj.onrender.com/api/auth/items');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

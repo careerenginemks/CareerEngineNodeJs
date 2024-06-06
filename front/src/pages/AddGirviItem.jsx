@@ -29,7 +29,7 @@ const AddGirviItem = () => {
 
   const fetchAllCustomer = () => {
     setLoading(true);
-    fetch('http://localhost:5000/api/auth/customers')
+    fetch('https://gnj.onrender.com/api/auth/customers')
       .then(response => response.json())
       .then(data => {
         const options = data.map(customer => ({
@@ -47,7 +47,7 @@ const AddGirviItem = () => {
 
   const fetchAllItems = () => {
     setLoading(true);
-    fetch('http://localhost:5000/api/auth/getallitems')
+    fetch('https://gnj.onrender.com/api/auth/getallitems')
       .then(response => response.json())
       .then(data => {
         const options = data.map(item => ({
@@ -84,7 +84,7 @@ const AddGirviItem = () => {
             console.log(cloudinaryData);
             formData.imageUrl = cloudinaryData.secure_url;
             // Now that formData is updated with the image URL (if uploaded), proceed to save data
-            fetch("http://localhost:5000/api/auth/items", {
+            fetch("https://gnj.onrender.com/api/auth/items", {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ const AddGirviItem = () => {
 
     console.log("Before Data",formData);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/items", {
+      const response = await fetch("https://gnj.onrender.com/api/auth/items", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

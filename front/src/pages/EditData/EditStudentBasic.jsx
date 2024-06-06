@@ -54,7 +54,7 @@ const EditStudentBasic = () => {
     console.log('fetch');
     setloading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/getAllData/${studentCode}/${year}/${table}`);
+      const response = await fetch(`https://gnj.onrender.com/api/v1/getAllData/${studentCode}/${year}/${table}`);
       if (!response.ok) {
         throw new Error(`Error fetching student details: ${response.statusText}`);
       }
@@ -112,7 +112,7 @@ const EditStudentBasic = () => {
     //   console.log("After Cloudinary Upload:", formData);
 // console.log(formData.id, "formData.id")
       // Proceed with the second API call
-      const response = await fetch(`http://localhost:5000/api/v1/updateBasicDetail/${fetchDataId}`, {
+      const response = await fetch(`https://gnj.onrender.com/api/v1/updateBasicDetail/${fetchDataId}`, {
         method: "PUT", // Assuming you are using PUT for updating
         headers: {
           "Content-Type": "application/json",

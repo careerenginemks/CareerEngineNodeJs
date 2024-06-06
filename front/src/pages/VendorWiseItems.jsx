@@ -25,7 +25,7 @@ const VendorWiseItems = () => {
 
     const fetchAllCustomer = () => {
         setLoading(true);
-        fetch('http://localhost:5000/api/auth/customers')
+        fetch('https://gnj.onrender.com/api/auth/customers')
             .then(response => response.json())
             .then(data => {
                 const options = data.map(customer => ({
@@ -43,7 +43,7 @@ const VendorWiseItems = () => {
 
     const fetchAllVendor = () => {
       setLoading(true);
-      fetch('http://localhost:5000/api/auth/vendors')
+      fetch('https://gnj.onrender.com/api/auth/vendors')
           .then(response => response.json())
           .then(data => {
               const options = data.map(customer => ({
@@ -64,7 +64,7 @@ const VendorWiseItems = () => {
     const fetchItems = async (vendorId) => {
         console.log("Fecsdsd");
         try {
-            const response = await fetch(`http://localhost:5000/api/auth/vendorWiseItem/${vendorId}`);
+            const response = await fetch(`https://gnj.onrender.com/api/auth/vendorWiseItem/${vendorId}`);
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error('Error fetching items:', errorData.message);
@@ -84,7 +84,7 @@ const VendorWiseItems = () => {
 
         console.log("Before Data", formData);
         try {
-            const response = await fetch("http://localhost:5000/api/auth/items", {
+            const response = await fetch("https://gnj.onrender.com/api/auth/items", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -127,7 +127,7 @@ const VendorWiseItems = () => {
   //   const updateItemVendor = async (vendorId) => {
   //     setLoading(true);
   //     try {
-  //         const response = await fetch(`http://localhost:5000/api/auth/items/${vendorItems._id}`, {
+  //         const response = await fetch(`https://gnj.onrender.com/api/auth/items/${vendorItems._id}`, {
   //             method: "PUT",
   //             headers: {
   //                 "Content-Type": "application/json",

@@ -37,7 +37,7 @@ const StudentFamilyDetail = () => {
 
     const fetchAllStudentDetails = () => {
         setloading(true);
-        fetch('http://localhost:5000/api/v1/fetchAllStudentDetails')
+        fetch('https://gnj.onrender.com/api/v1/fetchAllStudentDetails')
             .then(response => response.json())
             .then(data => {
                 setStudentDetails(data.data);
@@ -101,7 +101,7 @@ const StudentFamilyDetail = () => {
 
 
         // Proceed with the second API call
-        const response = await fetch("http://localhost:5000/api/v1/addFamilyDetail", {
+        const response = await fetch("https://gnj.onrender.com/api/v1/addFamilyDetail", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

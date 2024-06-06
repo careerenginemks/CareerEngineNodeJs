@@ -18,7 +18,7 @@ const StudentBasic = () => {
     setLoading(true);
     console.log("Before Chat", formData);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/customers", {
+      const response = await fetch("https://gnj.onrender.com/api/auth/customers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
