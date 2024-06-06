@@ -16,7 +16,7 @@ const StudentBasic = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Before Chat", formData);
+    console.log("Before Chat", formData);  
     try {
       const response = await fetch("https://gnj.onrender.com/api/auth/customers", {
         method: "POST",
